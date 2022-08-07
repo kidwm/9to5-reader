@@ -1,7 +1,7 @@
 const SITE_HOST = 'https://9to5google.com';
 const PAGE_SIZE = 30;
 
-const IGNORED_TERMS = ['Stadia', 'Deals:', 'deals of the day:', 'top stories:', 'OnePlus'];
+const IGNORED_TERMS = ['Stadia', 'Deals:', 'deals of the day:', 'top stories:', 'OnePlus', 'Fitbit'];
 
 browser.sidebarAction.setIcon({
     path: `${SITE_HOST}/favicon.ico`,
