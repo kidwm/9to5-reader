@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    display: grid;
+    min-height: 100vh;
+}
+
+main {
+    padding: 1em;
+}
+
+main > article {
+    margin-bottom: 1rem;
+}
+
+main > article.ignore {
+    opacity: 0.5;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #999;
+}
+
+h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+main > article.ignore h2 {
+    font-size: small;
+}
+
+time {
+    display: block;
+    text-align: right;
+}
+
+button {
+    position: sticky;
+    bottom: 0;
+    padding-block: 0.5em;
+    text-align: center;
+}

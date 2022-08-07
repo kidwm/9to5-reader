@@ -1,0 +1,15 @@
+{
+    "name": "9to5 Reader",
+    "description": "A sidebar that show news from 9to5 sites",
+    "homepage_url": "https://github.com/kidwm/9to5-reader",
+    "manifest_version": 2,
+    "permissions": [
+        "https://9to5google.com/*",
+        "https://9to5mac.com/*"
+    ],
+    "sidebar_action": {
+        "default_title": "9to5 Reader",
+        "default_panel": "sidebar.html"
+    },
+    "version": "1.0.0"
+}
