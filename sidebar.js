@@ -1,8 +1,6 @@
 const SITE_HOST = 'https://9to5google.com';
 const PAGE_SIZE = 30;
 
-const IGNORED_TERMS = ['Stadia', 'Deals:', 'deals of the day:', 'top stories:', 'OnePlus', 'Fitbit'];
-
 browser.sidebarAction.setIcon({
     path: `${SITE_HOST}/favicon.ico`,
 });
@@ -10,7 +8,12 @@ browser.sidebarAction.setIcon({
 const template = document.querySelector('template');
 const loadButton = document.querySelector('main + button');
 
+let obscureTerms = [];
 let cursor;
+
+browser.storage.sync.get("obscureTargets")
+    .then(result => obscureTerms = result.obscureTargets)
+    .catch(error => console.log(`Error: ${error}`));
 
 const fetchArticles = time => {
     loadButton.disabled = true;
@@ -30,7 +33,7 @@ const fetchArticles = time => {
                 const time = template.content.querySelector('time');
                 time.textContent = new Date(article.date).toLocaleString();
                 const item = document.importNode(template.content, true);
-                if (IGNORED_TERMS.some(term => title.includes(term))) {
+                if (obscureTerms.some(term => title.includes(term))) {
                     item.querySelector('article').classList.add('ignore');
                 }
                 fragment.appendChild(item);

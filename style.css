@@ -15,6 +15,18 @@ main > article {
 
 main > article.ignore {
     opacity: 0.5;
+    position: relative;
+}
+
+main > article.ignore::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: .5em;
+    background-color: #ccc;
+    transform: translateX(-1em);
 }
 
 a {
@@ -23,7 +35,7 @@ a {
 }
 
 a:visited {
-    color: #999;
+    color: #ccc;
 }
 
 h2 {
