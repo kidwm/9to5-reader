@@ -2,18 +2,35 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
+        <link href="style.css" rel="stylesheet" />
     </head>
-    <body style="padding: 1em">
-        <form style="display: flex; row-gap: 1em; flex-wrap: wrap;">
-            <label style="display: grid; row-gap: .5em; flex-basis: 100%">
-                Keywords You are not interested, will obscure the entries
+    <body>
+        <form>
+            <label>
+                Keywords are not interested, will obscure the entries
                 <textarea
                     name="keywords"
                     placeholder="use comma to separate"
-                    style="resize: vertical;"
                 ></textarea>
             </label>
-            <button type="submit" style="margin-left: auto;">Save</button>
+            <fieldset>
+                <legend>Default open site</legend>
+                <label>
+                    <input name="site" type="radio" value="linux" />
+                    Linux
+                </label>
+                <label>
+                    <input name="site" type="radio" value="google" />
+                    Google
+                </label>
+                <label>
+                    <input name="site" type="radio" value="mac" />
+                    Mac
+                </label>
+            </fieldset>
+            <button type="submit">
+                Save
+            </button>
         </form>
         <script src="options.js"></script>
     </body>

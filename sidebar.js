@@ -1,23 +1,16 @@
-const SITE_HOST = 'https://9to5google.com';
 const PAGE_SIZE = 30;
-
-browser.sidebarAction.setIcon({
-    path: `${SITE_HOST}/favicon.ico`,
-});
 
 const template = document.querySelector('template');
 const loadButton = document.querySelector('main + button');
+const navTabs = document.querySelector('nav');
 
-let obscureTerms = [];
+let obscureTerms;
 let cursor;
-
-browser.storage.sync.get("obscureTargets")
-    .then(result => obscureTerms = result.obscureTargets)
-    .catch(error => console.log(`Error: ${error}`));
+let site;
 
 const fetchArticles = time => {
     loadButton.disabled = true;
-    fetch(`${SITE_HOST}/wp-json/wp/v2/posts/?per_page=${PAGE_SIZE}${time ? `&before=${time}` : ''}`)
+    fetch(`https://9to5${site}.com/wp-json/wp/v2/posts/?per_page=${PAGE_SIZE}${time ? `&before=${time}` : ''}`)
         .then(response => response.json())
         .then(articles => {
             const fragment = document.createDocumentFragment();
@@ -33,7 +26,7 @@ const fetchArticles = time => {
                 const time = template.content.querySelector('time');
                 time.textContent = new Date(article.date).toLocaleString();
                 const item = document.importNode(template.content, true);
-                if (obscureTerms.some(term => title.includes(term))) {
+                if (obscureTerms.some(term => Boolean(term) && title.includes(term))) {
                     item.querySelector('article').classList.add('ignore');
                 }
                 fragment.appendChild(item);
@@ -46,6 +39,25 @@ const fetchArticles = time => {
         });
 }
 
+const switchSite = nextSite => {
+    site = nextSite;
+    cursor = undefined;
+
+    browser.sidebarAction.setIcon({
+        path: `https://9to5${site}.com/favicon.ico`,
+    });
+
+    const currentTab = document.querySelector('nav [aria-current="true"]');
+    if (currentTab) {
+        currentTab.removeAttribute('aria-current')
+    }
+    document.querySelector(`nav a[href="#${site}"`).setAttribute('aria-current', true);
+
+    document.querySelector('main').replaceChildren();
+    
+    fetchArticles();
+};
+
 loadButton.addEventListener('click', event => {
     if (cursor) {
         fetchArticles(cursor);
@@ -53,4 +65,18 @@ loadButton.addEventListener('click', event => {
     }
 });
 
-fetchArticles();
+navTabs.addEventListener('click', event => {
+    if (event.target.href) {
+        switchSite(event.target.href.split('#').pop());
+    }
+});
+
+browser.storage.sync.get({
+    obscureTargets: [],
+    defaultSite: 'linux',
+})
+    .then(result => {
+        obscureTerms = result.obscureTargets;
+        switchSite(result.defaultSite);
+    })
+    .catch(error => console.log(`Error: ${error}`));

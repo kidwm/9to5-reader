@@ -5,28 +5,44 @@ body {
     min-height: 100vh;
 }
 
-main {
-    padding: 1em;
+body > nav {
+    position: sticky;
+    top: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 1ch;
+    place-items: center;
+    height: 2.5em;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+}
+
+body > nav a {
+    line-height: 2.5em;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+body > nav [aria-current="true"] {
+    background-image: linear-gradient(to right, #ccc 0, #ccc 100%);
+    background-size: 100% 0.2em;
+    background-repeat: repeat-x;
+    background-position: bottom;
 }
 
 main > article {
     margin-bottom: 1rem;
+    padding: 1em;
 }
 
 main > article.ignore {
-    opacity: 0.5;
-    position: relative;
-}
-
-main > article.ignore::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: .5em;
-    background-color: #ccc;
-    transform: translateX(-1em);
+    color:rgba(0, 0, 0, 0.5);
+    background-image: linear-gradient(to right, #ccc 0, #ccc 100%);
+    background-size: 0.5em 100%;
+    background-repeat: repeat-y;
+    background-position: left;
 }
 
 a {
@@ -52,9 +68,30 @@ time {
     text-align: right;
 }
 
-button {
+body > button {
     position: sticky;
     bottom: 0;
     padding-block: 0.5em;
     text-align: center;
+}
+
+body > form {
+    padding: 1em;
+    display: grid;
+    row-gap: 1em;
+    flex-wrap: wrap;
+}
+
+body > form > label {
+    display: grid;
+    row-gap: .5em;
+    flex-basis: 100%;
+}
+
+body > form textarea {
+    resize: vertical;
+}
+
+body > form button {
+    margin-left: auto;
 }
